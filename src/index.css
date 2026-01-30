@@ -1,0 +1,31 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.bg{
+    background: url("./assets/BG-2.jpg");
+    background-size: cover;
+    height: 70vh;
+    margin:auto;
+}
+.text-xl {   
+  font-family: monospace;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin:100px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 15ch; /* total number of characters */
+  animation: typing 3s steps(15) forwards, blink 0.75s step-end 4; 
+}
+
+/* Typing effect */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 15ch; }
+}
+
+/* Blinking cursor effect (stops after typing) */
+@keyframes blink {
+  0%, 100% { border-color: #ffffff; }
+  50% { border-color: transparent; }
+}
