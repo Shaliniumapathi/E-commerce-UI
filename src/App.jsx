@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Routes as Routs, Route } from 'react-router-dom'
 import Home from './Pages/Home.jsx'
 import ProductDetails from './Pages/ProductDetails.jsx'
@@ -22,6 +23,7 @@ function App() {
       <Routs>
         <Route path='/' element={<Home/>} />
         <Route path="/card" element={<CardPage/>} />
+        <Route path="/cart" element={<CardPage/>} />
         <Route path="/product/:id" element={<ProductDetails/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/about" element={<About/>}/>

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import image from "../assets/Images/off-saree.webp"
 import image1 from "../assets/Images/top-1.webp"
 import image2 from "../assets/Images/western-01.webp"
+import Footer from '../Components/Footer.jsx'
 
 export default function LoginPage() {
   const dispatch = useDispatch()
@@ -76,5 +77,7 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    
   )
 }
+ 

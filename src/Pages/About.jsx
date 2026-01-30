@@ -6,9 +6,12 @@ import Img3 from '../assets/Images/off-saree-1.webp'
 import Img4 from '../assets/Images/lehanga.webp'
 import VerticalCarouselV2 from '../Components/VerticalCarouselV2'
 import { Link } from 'react-router-dom'
+import Footer from '../Components/Footer.jsx'
+import '../App.css';
 
 export default function About() {
   return (
+    <>
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         {/* Clean Hero */}
@@ -80,5 +83,7 @@ export default function About() {
         </div>
       </div>
     </div>
+     <Footer/>
+     </>
   )
 }

@@ -4,6 +4,13 @@ import { Facebook, Instagram, Twitter, Youtube, PhoneCall, MapPin , Mail } from 
 import { Link } from 'react-router-dom'
 
 function Footer() {
+
+    const Categories = [
+  "All",
+  'Western Wear',
+  'Traditional Wear',
+  'Kurties',
+]
   return (
     <footer className='bg-slate-900 shadow-md'>
         <div className='container mx-auto px-4'>
@@ -47,7 +54,7 @@ function Footer() {
                                 <Link to="/about">About</Link>
                             </li>
                             <li>
-                                <Link to="/FAQ's">FAQ'S</Link>
+                                <Link to="/faq">FAQ'S</Link>
                             </li>
                             <li>
                                 <Link to="/contact">Contact</Link>
