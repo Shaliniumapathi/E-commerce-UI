@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShoppingCart, Heart, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import AddToCartNoAuth from './AddToCartNoAuth'
 
 export default function ProductDetailsModal({ product, open, onClose }) {
   const dispatch = useDispatch()
@@ -16,18 +17,17 @@ export default function ProductDetailsModal({ product, open, onClose }) {
   const images = product.images && product.images.length ? product.images : product.image ? [product.image] : []
 
   const addToCart = () => {
-    if (!isLoggedIn) {
-      setToast('Please login to add to cart')
-      // close product modal and open login modal
-      setPendingAdd({ product, qty })
-      setTimeout(() => {
-        onClose()
-        setLoginOpen(true)
-      }, 600)
-      return
-    }
-
+    // allow adding to cart without login: dispatch + localStorage fallback
     dispatch({ type: 'cart/addItem', payload: { ...product, quantity: qty } })
+    try {
+      const current = JSON.parse(localStorage.getItem('cart') || '[]') || []
+      const idx = current.findIndex((it) => String(it.id) === String(product.id))
+      if (idx > -1) current[idx].quantity = (Number(current[idx].quantity || 0) + Number(qty || 1))
+      else current.push({ ...product, quantity: Number(qty || 1) })
+      localStorage.setItem('cart', JSON.stringify(current))
+    } catch (e) {
+      console.error(e)
+    }
     setToast('Product added to cart')
     setTimeout(() => onClose(), 600)
   }
@@ -37,17 +37,17 @@ export default function ProductDetailsModal({ product, open, onClose }) {
   }
 
   const buyNow = () => {
-    if (!isLoggedIn) {
-      setToast('Please login to continue to checkout')
-      setPendingAdd({ product, qty, redirectToCheckout: true })
-      setTimeout(() => {
-        onClose()
-        setLoginOpen(true)
-      }, 600)
-      return
-    }
-
+    // add to cart locally and go to checkout without forcing login
     dispatch({ type: 'cart/addItem', payload: { ...product, quantity: qty } })
+    try {
+      const current = JSON.parse(localStorage.getItem('cart') || '[]') || []
+      const idx = current.findIndex((it) => String(it.id) === String(product.id))
+      if (idx > -1) current[idx].quantity = (Number(current[idx].quantity || 0) + Number(qty || 1))
+      else current.push({ ...product, quantity: Number(qty || 1) })
+      localStorage.setItem('cart', JSON.stringify(current))
+    } catch (e) {
+      console.error(e)
+    }
     setToast('Added to cart — redirecting to checkout')
     setTimeout(() => {
       onClose()
@@ -151,9 +151,7 @@ export default function ProductDetailsModal({ product, open, onClose }) {
             </div>
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
-              <button onClick={addToCart} className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-                <ShoppingCart size={16} /> Add to Cart
-              </button>
+              <AddToCartNoAuth product={product} qty={qty} onAdded={() => { setToast('Product added to cart'); setTimeout(() => onClose(), 600) }} />
 
               <button onClick={addToWishlist} className="flex items-center justify-center gap-2 border px-4 py-2 rounded hover:bg-gray-50">
                 <Heart size={16} /> Add to Wishlist

@@ -22,13 +22,13 @@ function App() {
     <Navbar/>
       <Routs>
         <Route path='/' element={<Home/>} />
-        <Route path="/card" element={<CardPage/>} />
         <Route path="/cart" element={<CardPage/>} />
         <Route path="/product/:id" element={<ProductDetails/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/faq" element={<FAQ/>}/>
+       
       </Routs>
     </BrowserRouter>
     </Provider>

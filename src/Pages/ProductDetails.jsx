@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Heart, ChevronLeft, ChevronRight } from 'lucide-react'
+import AddToCartNoAuth from '../Components/AddToCartNoAuth'
 
 export default function ProductDetailsPage() {
   const { id } = useParams()
@@ -16,13 +17,13 @@ export default function ProductDetailsPage() {
   if (!product) return <div className="p-6">Product not found.</div>
 
   const handleAddToCart = () => {
-    if (!isLoggedIn) {
-      navigate('/login', { state: { from: `/product/${product.id}` } })
-      return
-    }
-
+    // kept for compatibility if other code calls it; no-op when using AddToCartNoAuth
     dispatch({ type: 'cart/addItem', payload: { ...product, quantity: qty } })
-    // optional toast could be dispatched here
+    const current = JSON.parse(localStorage.getItem('cart') || '[]') || []
+    const idx = current.findIndex((it) => String(it.id) === String(product.id))
+    if (idx > -1) current[idx].quantity = (Number(current[idx].quantity || 0) + Number(qty || 1))
+    else current.push({ ...product, quantity: Number(qty || 1) })
+    localStorage.setItem('cart', JSON.stringify(current))
   }
 
   const handleWishlist = () => {
@@ -100,9 +101,7 @@ export default function ProductDetailsPage() {
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
-            <button onClick={handleAddToCart} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-              <ShoppingCart size={16} /> Add to Cart
-            </button>
+            <AddToCartNoAuth product={product} qty={qty} onAdded={() => { /* optional UI feedback */ }} />
 
             <button onClick={handleWishlist} className="flex items-center gap-2 border px-4 py-2 rounded hover:bg-gray-50">
               <Heart size={16} /> Add to Wishlist

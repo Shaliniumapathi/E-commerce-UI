@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Footer from '../Components/Footer'
 
 function CardPage() {
   const navigate = useNavigate();
@@ -12,24 +13,34 @@ function CardPage() {
 
   // prefer redux cart, fall back to localStorage
   const reduxCart = useSelector((s) => s?.cart?.items);
-  const localCart = useMemo(() => JSON.parse(localStorage.getItem("cart") || "[]"), []);
-  const cartItems = reduxCart ?? localCart;
-  // Auth gating: redirect unauthenticated users to login
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate]);
+  // maintain local state mirror of localStorage so UI updates when AddToCartNoAuth writes to it
+  const [localCartState, setLocalCartState] = useState(() => JSON.parse(localStorage.getItem("cart") || "[]"));
+  const cartItems = reduxCart ?? localCartState;
 
-  if (!isLoggedIn) return null; // prevent UI flash while redirecting
+  useEffect(() => {
+    const handler = (e) => {
+      setLocalCartState(JSON.parse(localStorage.getItem("cart") || "[]"));
+    }
+    window.addEventListener('cart:changed', handler)
+    return () => window.removeEventListener('cart:changed', handler)
+  }, [])
+
+  // debug: log cart sources
+  useEffect(() => {
+    console.log('CardPage: reduxCart', reduxCart)
+    console.log('CardPage: localCartState', localCartState)
+    try { console.log('CardPage: localStorage cart', JSON.parse(localStorage.getItem('cart') || '[]')) } catch (e) {}
+  }, [reduxCart, localCartState])
 
   const handleRemove = (id) => {
     // dispatch redux action if present (no-ops if reducer absent)
     dispatch({ type: "cart/removeItem", payload: id });
 
     // also update localStorage fallback
-    const updated = (reduxCart ?? localCart).filter((it) => String(it.id) !== String(id));
+    const current = reduxCart ?? JSON.parse(localStorage.getItem("cart") || "[]");
+    const updated = (current || []).filter((it) => String(it.id) !== String(id));
     localStorage.setItem("cart", JSON.stringify(updated));
+    setLocalCartState(updated)
   };
 
   const handleClear = () => {
@@ -61,7 +72,7 @@ function CardPage() {
           <div className="mt-6 flex justify-between items-center">
             <div className="text-lg font-semibold">Total: ${total.toFixed(2)}</div>
             <div className="flex gap-2">
-              <button onClick={() => navigate('/checkout')} className="bg-indigo-600 text-white px-4 py-2 rounded">Checkout</button>
+              <button onClick={() => { if (!isLoggedIn) navigate('/login'); else navigate('/checkout') }} className="bg-indigo-600 text-white px-4 py-2 rounded">Checkout</button>
               <button onClick={handleClear} className="px-4 py-2 border rounded">Clear Cart</button>
             </div>
           </div>
