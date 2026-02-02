@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {UserRound, ShoppingCart, Search, X} from 'lucide-react'
+import {UserRound, ShoppingCart, Search, X , Heart} from 'lucide-react'
 import Logo from '../assets/Logo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerms } from '../features/products/ProductSlice';
@@ -46,7 +46,7 @@ function Navbar() {
                     <Link to="/">Sign In</Link>
                 </li>
                 <li>
-                    <Link to="/">My Account</Link>
+                    <Link to="/account">My Account</Link>
                 </li>
                </div>
                <UserRound size={40} className='bg-gray-200 p-2 text-black rounded-4xl cursor-pointer'  onClick={handleUser}/>
@@ -115,9 +115,21 @@ function Navbar() {
 </form>
 
 
-            <Link to="/cart">
-            <ShoppingCart size={54}  className='bg-gray-100 rounded-full cursor-pointer px-3 py-2'/>
-            </Link>
+            <div className="flex items-center gap-3">
+  <Link to="/cart">
+    <ShoppingCart
+      size={54}
+      className="bg-gray-100 rounded-full cursor-pointer px-3 py-2"
+    />
+  </Link>
+
+  <Link to="/wishlist">
+    <Heart
+      size={54}
+      className="bg-gray-100 rounded-full cursor-pointer px-3 py-2 text-red-500"
+    />
+  </Link>
+</div>
         </nav>
         </>
     </header>

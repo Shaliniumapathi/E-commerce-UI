@@ -27,12 +27,30 @@ export default function ProductDetailsPage() {
   }
 
   const handleWishlist = () => {
-    if (!isLoggedIn) {
-      navigate('/login', { state: { from: `/product/${product.id}` } })
-      return
+    // add to redux wishlist if available
+    try {
+      dispatch({ type: 'wishlist/addItem', payload: product })
+    } catch (e) {
+      // ignore
     }
 
-    dispatch({ type: 'wishlist/addItem', payload: product })
+    // maintain localStorage fallback for wishlist
+    try {
+      const current = JSON.parse(localStorage.getItem('wishlist') || '[]') || []
+      const exists = current.findIndex((it) => String(it.id) === String(product.id))
+      if (exists === -1) {
+        current.push(product)
+        localStorage.setItem('wishlist', JSON.stringify(current))
+
+        try {
+          window.dispatchEvent(new CustomEvent('wishlist:changed', { detail: { item: product, action: 'added' } }))
+        } catch (e) {
+          console.warn('Unable to dispatch wishlist:changed event', e)
+        }
+      }
+    } catch (e) {
+      console.error('Failed to update local wishlist', e)
+    }
   }
 
   const handleBuyNow = () => {
