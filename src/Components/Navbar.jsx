@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {UserRound, ShoppingCart, Search, X , Heart} from 'lucide-react'
-import Logo from '../assets/Logo.png'
+import Logo from '../assets/logo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerms } from '../features/products/ProductSlice';
 import { clearSearch } from '../features/products/ProductSlice';
