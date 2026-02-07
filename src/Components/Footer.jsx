@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../Assets/Logo.png'
+import Logo from "../assets/logo.png";
 import { Facebook, Instagram, Twitter, Youtube, PhoneCall, MapPin , Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
