@@ -1,16 +1,59 @@
-# React + Vite
+# E-Commerce UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern E-commerce frontend built with **React** and **Vite**. This project provides a minimal setup for React with Vite, Hot Module Replacement (HMR), and some ESLint rules for clean code.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo
 
-## React Compiler
+Check out the live application deployed on Vercel:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[E-commerce UI Live](https://e-commerce-ui-navy-nine.vercel.app)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚡ Features
+
+- Built with **React** and **Vite**
+- Fast refresh via HMR
+- ESLint configured for better code quality
+- Modular component structure
+- Responsive and modern UI
+
+---
+
+## 🛠 Technology Stack
+
+- **Frontend**: React, Vite
+- **Styling**: CSS / Tailwind / SCSS (replace with your actual choice)
+- **State Management**: Redux (if used)
+- **Routing**: React Router
+- **Build Tool**: Vite
+
+---
+
+## 🔌 Available Vite Plugins
+
+1. **@vitejs/plugin-react** – uses Babel for Fast Refresh  
+2. **@vitejs/plugin-react-swc** – uses SWC for Fast Refresh  
+
+> ⚠️ React Compiler is not enabled in this template due to its impact on dev & build performance.  
+> To enable it, see the [React Compiler documentation](https://vitejs.dev/plugins/#react).
+
+---
+
+## 📜 ESLint & Code Quality
+
+- ESLint is preconfigured for this project
+- For production apps, we recommend using **TypeScript** with type-aware lint rules
+- Check the [TS template](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) for integrating TypeScript and `typescript-eslint`
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/e-commerce-ui.git
+cd e-commerce-ui
