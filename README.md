@@ -8,7 +8,7 @@ A modern E-commerce frontend built with **React** and **Vite**. This project pro
 
 Check out the live application deployed on Vercel:
 
-[E-commerce UI Live]([https://e-commerce-ui-navy-nine.vercel.app](https://e-commerce-8x1iu5lyn-shalinis-projects-e0ee5846.vercel.app/))
+[E-commerce UI Live](https://e-commerce-ui-git-main-shalinis-projects-e0ee5846.vercel.app/)
 
 ---
 
